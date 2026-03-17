@@ -32,16 +32,31 @@ def _candidate_ffmpeg_paths() -> list[Path]:
 
 def ensure_ffmpeg() -> None:
     """Ensure ffmpeg is available, prepending known paths to PATH if needed."""
+    # 1. Check custom location from Environment Variable
+    env_path = os.environ.get("FFMPEG_PATH")
+    if env_path:
+        env_exe = Path(env_path)
+        if env_exe.is_file():
+            os.environ["PATH"] = str(env_exe.parent) + os.pathsep + os.environ.get("PATH", "")
+            return
+        elif env_exe.is_dir():
+            os.environ["PATH"] = str(env_exe) + os.pathsep + os.environ.get("PATH", "")
+            return
+
+    # 2. Standard system lookups
     if shutil.which("ffmpeg") is not None:
         return
+
+    # 3. Windows locale candidates (fallback for local dev)
     for exe in _candidate_ffmpeg_paths():
         if exe.exists():
             os.environ["PATH"] = str(exe.parent) + os.pathsep + os.environ.get("PATH", "")
             if shutil.which("ffmpeg") is not None:
                 return
+
     raise RuntimeError(
         "ffmpeg is not installed or not on PATH. "
-        "Install it (e.g., winget install Gyan.FFmpeg) and retry."
+        "Set FFMPEG_PATH environment variable or install it (e.g., winget install Gyan.FFmpeg) and retry."
     )
 
 
