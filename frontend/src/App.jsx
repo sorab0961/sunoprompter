@@ -114,6 +114,7 @@ export default function App() {
   const [copiedKey, setCopiedKey] = useState("");
 
   const handleAnalyze = async () => {
+    const API_URL = import.meta.env.VITE_API_URL || "";
     setError("");
     setData(null);
     const formData = new FormData();
@@ -123,7 +124,7 @@ export default function App() {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/analyze", { method: "POST", body: formData });
+      const res = await fetch(`${API_URL}/api/analyze`, { method: "POST", body: formData });
       const text = await res.text();
       if (!res.ok) throw new Error(text || `Request failed with status ${res.status}`);
       const json = text ? JSON.parse(text) : {};
