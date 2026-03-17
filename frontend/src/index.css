@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(94, 234, 212, 0.1), transparent 25%),
+    #0f172a;
+  min-height: 100vh;
+}
+
+.glass {
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Card entrance animation ───────────────────────────────── */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-card {
+  animation: fadeSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* staggered delays for prompt cards */
+.delay-0  { animation-delay: 0ms;  }
+.delay-75 { animation-delay: 75ms; }
+.delay-150{ animation-delay: 150ms;}
+.delay-225{ animation-delay: 225ms;}
+
+/* ── Loading pulse dots ────────────────────────────────────── */
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.15; transform: scale(0.8); }
+  40%            { opacity: 1;    transform: scale(1);   }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22d3ee, #34d399);
+  animation: blink 1.2s infinite ease-in-out;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── Copied flash ──────────────────────────────────────────── */
+@keyframes copiedPop {
+  0%   { transform: scale(1);   }
+  40%  { transform: scale(1.12); }
+  100% { transform: scale(1);   }
+}
+
+.copied-pop {
+  animation: copiedPop 0.25s ease-out;
+}

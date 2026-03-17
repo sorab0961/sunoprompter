@@ -1,0 +1,16 @@
+# Backend
+backend/.venv/
+backend/__pycache__/
+backend/temp/
+backend/uvicorn.err
+backend/uvicorn.log
+
+# Frontend
+frontend/node_modules/
+frontend/dev.err
+frontend/dev.log
+frontend/.env
+
+# OS files
+.DS_Store
+Thumbs.db
